@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neuseelandreise</title>
+    <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -34,7 +35,7 @@
                 <figcaption>Blick auf die Stadt und Meer (Quelle: <a href="https://pixabay.com/de/photos/kaikoura-neuseeland-toetoe-meer-4248161/">Pixabay</a>)</figcaption>
             </figure>
             <h3>Übersichtskarte</h3>
-            <div id="map" style="width: 900px; height: 600px; border: 1px solid silver;"> </div>
+            <div id="map"> </div>
             <h3>Links</h3>
             <ul>
                 <li><a href="https://www.kaikoura.co.nz/">Homepage der Stadt</a></li>
@@ -52,7 +53,7 @@
         </nav>
     </footer>
 
-    <!-- weil Java code und nicht html code
+    <!-- weil Javascript code und nicht html code
      L. steht für Leaflet, View([long, lat], zoomfaktor)-->
     <script>
         var map = L.map('map').setView([-42.411667, 173.682222], 13);
