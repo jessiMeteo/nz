@@ -41,7 +41,7 @@ const STOPS = [
     {
         nr: 4,
         title: "Cormandel Peninsula",
-        usr: "Gregorysprenger2001",
+        user: "Gregorysprenger2001",
         lat: -37.882778,
         lng: 175.636667,
         zoom: 11,
@@ -205,7 +205,7 @@ for (let i = 0; i < STOPS.length; i++) {
 }
 
 // Karte initialisieren
-let map = L.map('map').setView([stop.lat, stop.lng], stop.zoom);
+let map = L.map('map');
 
 
 // Hintergrundkarte definieren
@@ -227,7 +227,29 @@ for (let i = 0; i < STOPS.length; i++) {
             <li> Geogr. Breite: ${STOPS[i].lat.toFixed(5)}° </li>
             <li> Geogr. Länge: ${STOPS[i].lng.toFixed(5)}° </li>
         </ul>.
-    `).openPopup();
+    `);
+    // auf eigene Etappe blicken und Popop öffnen
+    if (STOPS[i].user == 'jessimeteo') {
+        console.log(STOPS[i].user, 'meine Etappe :-)')
+        map.setView([STOPS[i].lat, STOPS[i].lng], STOPS[i].zoom);
+        marker.openPopup();
+    }
+    // Pulldownmenü befüllen
+    let option = document.createElement('option');
+    option.value = STOPS[i].user;
+    option.text = STOPS[i].title;
+    if (STOPS[i].user == 'jessimeteo') {
+        option.selected = true;
+    }
+    document.querySelector('#pulldown select').appendChild(option);
+}
+
+// auf Änderungen beim Pulldown reagieren
+document.querySelector('#pulldown select').onchange = function(evt) {
+    let url = `https://${evt.target.value}.github.io/nz`;
+    //console.log(url);
+    //console.log(evt.target.value);
+    window.location = url;
 }
 
 // Objekt definieren
@@ -242,4 +264,5 @@ console.log('title', course.title);
 console.log('semester', course.semester);
 console.log('stunden', course.stunden);
 console.log('typ', course.typ);
+
 
