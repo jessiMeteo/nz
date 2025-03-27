@@ -3,8 +3,13 @@
 Skript für die Neuseelandreise
 */
 
+let lat = -42.411667;
+let lng =  173.682222;
+let zoom = 11;
+
 // Karte initialisieren
-let map = L.map('map').setView([-42.411667, 173.682222], 13);
+let map = L.map('map').setView([lat, lng], zoom);
+
 
 // Hintergrundkarte definieren
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -14,7 +19,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //L. steht für Leaflet, View([long, lat], zoomfaktor)
 
 // Marker zeichnen
-let marker = L.marker([-42.411667, 173.682222]).addTo(map);
+let marker = L.marker([lat, lng]).addTo(map);
 
 // Popup definieren und öffnen
 marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
