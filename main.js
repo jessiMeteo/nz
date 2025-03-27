@@ -4,7 +4,7 @@ Skript für die Neuseelandreise
 */
 
 let lat = -42.411667;
-let lng =  173.682222;
+let lng = 173.682222;
 let zoom = 11;
 
 // Karte initialisieren
@@ -22,4 +22,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let marker = L.marker([lat, lng]).addTo(map);
 
 // Popup definieren und öffnen
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+marker.bindPopup(`
+    <b>Hello world!</b>
+    <br>
+    I am a popup.
+`).openPopup();
