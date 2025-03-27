@@ -3,7 +3,7 @@
 Skript für die Neuseelandreise
 */
 
-let stop ={
+let stop = {
     nr: 29,
     title: 'Kaikoura',
     user: 'jessimeteo',
@@ -27,7 +27,7 @@ const STOPS = [
         title: "Bay of Islands",
         user: "Ellinnaa",
         lat: -35.183333,
-        long: 174.166667,
+        lng: 174.166667,
         zoom: 11,
     },
     {
@@ -82,7 +82,7 @@ const STOPS = [
         nr: 9,
         title: "Wellington",
         user: "cs4151",
-        lat: "-41.2875",
+        lat: -41.2875,
         lng: 174.776111,
         zoom: 12,
     },
@@ -168,7 +168,7 @@ const STOPS = [
     },
     {
         nr: 24,
-        titel: "Moeraki Boulders",
+        title: "Moeraki Boulders",
         user: "StephanPumpernik",
         lat: -45.345275,
         lng: 170.826061,
@@ -200,6 +200,10 @@ const STOPS = [
     }
 ];
 
+for (let i = 0; i < STOPS.length; i++) {
+    console.log(i, STOPS[i], STOPS[i].title);
+}
+
 // Karte initialisieren
 let map = L.map('map').setView([stop.lat, stop.lng], stop.zoom);
 
@@ -211,17 +215,20 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 //L. steht für Leaflet, View([long, lat], zoomfaktor)
 
-// Marker zeichnen
-let marker = L.marker([stop.lat, stop.lng]).addTo(map);
-
-// Popup definieren und öffnen
-marker.bindPopup(`
-    <h2> ${stop.title} </h2>
-    <ul>
-        <li> Geogr. Breite: ${stop.lat.toFixed(5)}° </li>
-        <li> Geogr. Länge: ${stop.lng.toFixed(5)}° </li>
-    </ul>.
-`).openPopup();
+// loop über Etappen
+for (let i = 0; i < STOPS.length; i++) {
+    console.log(i, STOPS[i], STOPS[i].title);
+    // Marker zeichnen
+    let marker = L.marker([STOPS[i].lat, STOPS[i].lng]).addTo(map);
+    // Popup definieren und öffnen
+    marker.bindPopup(`
+        <h2> ${STOPS[i].title} </h2>
+         <ul>
+            <li> Geogr. Breite: ${STOPS[i].lat.toFixed(5)}° </li>
+            <li> Geogr. Länge: ${STOPS[i].lng.toFixed(5)}° </li>
+        </ul>.
+    `).openPopup();
+}
 
 // Objekt definieren
 let course = {
@@ -236,4 +243,3 @@ console.log('semester', course.semester);
 console.log('stunden', course.stunden);
 console.log('typ', course.typ);
 
-console.log(stop.lat)
