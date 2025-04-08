@@ -204,65 +204,68 @@ for (let i = 0; i < STOPS.length; i++) {
     console.log(i, STOPS[i], STOPS[i].title);
 }
 
+
+
 // Karte initialisieren
 let map = L.map('map');
 
+let overlay = {marker: L.featureGroup().addTo(map)};
 
-// Hintergrundkarte definieren
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+//Layer controll
+L.control.layers({
+    // provider unter leaflet plug ins
+    "Open Street Map": L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map),
+    "Open Topo Map": L.tileLayer.provider('OpenTopoMap'),
+    "Esri World Imagery": L.tileLayer.provider('Esri.WorldImagery'),
+}, {
+    "Etappenmarker": overlay.marker,
 }).addTo(map);
-//L. steht für Leaflet, View([long, lat], zoomfaktor)
 
-// loop über Etappen
-for (let i = 0; i < STOPS.length; i++) {
-    console.log(i, STOPS[i], STOPS[i].title);
-    // Marker zeichnen
-    let marker = L.marker([STOPS[i].lat, STOPS[i].lng]).addTo(map);
-    // Popup definieren und öffnen
-    marker.bindPopup(`
+// Maßstab (Plug-in)
+// options mit {} einfügen und default-values beachten
+let scale = L.control.scale({
+    imperial: false
+}).addTo(map);
+
+
+    // loop über Etappen
+    for (let i = 0; i < STOPS.length; i++) {
+        console.log(i, STOPS[i], STOPS[i].title);
+        // Marker zeichnen
+        let marker = L.marker([STOPS[i].lat, STOPS[i].lng]).addTo(map);
+        marker.addTo(overlay.marker);
+        // Popup definieren und öffnen
+        marker.bindPopup(`
         <h2> ${STOPS[i].title} </h2>
          <ul>
             <li> Geogr. Breite: ${STOPS[i].lat.toFixed(5)}° </li>
             <li> Geogr. Länge: ${STOPS[i].lng.toFixed(5)}° </li>
         </ul>.
     `);
-    // auf eigene Etappe blicken und Popop öffnen
-    if (STOPS[i].user == 'jessimeteo') {
-        console.log(STOPS[i].user, 'meine Etappe :-)')
-        map.setView([STOPS[i].lat, STOPS[i].lng], STOPS[i].zoom);
-        marker.openPopup();
+        // auf eigene Etappe blicken und Popop öffnen
+        if (STOPS[i].user == 'jessimeteo') {
+            console.log(STOPS[i].user, 'meine Etappe :-)')
+            map.setView([STOPS[i].lat, STOPS[i].lng], STOPS[i].zoom);
+            marker.openPopup();
+        }
+        // Pulldownmenü befüllen
+        let option = document.createElement('option');
+        option.value = STOPS[i].user;
+        option.text = STOPS[i].title;
+        if (STOPS[i].user == 'jessimeteo') {
+            option.selected = true;
+        }
+        document.querySelector('#pulldown select').appendChild(option);
     }
-    // Pulldownmenü befüllen
-    let option = document.createElement('option');
-    option.value = STOPS[i].user;
-    option.text = STOPS[i].title;
-    if (STOPS[i].user == 'jessimeteo') {
-        option.selected = true;
-    }
-    document.querySelector('#pulldown select').appendChild(option);
-}
+
+
+
 
 // auf Änderungen beim Pulldown reagieren
-document.querySelector('#pulldown select').onchange = function(evt) {
+document.querySelector('#pulldown select').onchange = function (evt) {
     let url = `https://${evt.target.value}.github.io/nz`;
     //console.log(url);
     //console.log(evt.target.value);
     window.location = url;
 }
-
-// Objekt definieren
-let course = {
-    title: "Webmapping",
-    semester: '25S',
-    stunden: 3,
-    typ: 'VU'
-};
-
-console.log('title', course.title);
-console.log('semester', course.semester);
-console.log('stunden', course.stunden);
-console.log('typ', course.typ);
-
 
