@@ -223,7 +223,7 @@ L.control.layers({
 
 // Maßstab (Plug-in)
 // options mit {} einfügen und default-values beachten
-let scale = L.control.scale({
+L.control.scale({
     imperial: false
 }).addTo(map);
 
